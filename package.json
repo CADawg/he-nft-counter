@@ -1,0 +1,15 @@
+{
+  "name": "he-nft-counter",
+  "version": "1.0.0",
+  "description": "Count Hive-Engine NFTs owned by a user",
+  "main": "index.js",
+  "scripts": {
+    "run": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
