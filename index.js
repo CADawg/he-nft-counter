@@ -13,6 +13,11 @@ function limiter(nft) {
     return nft.properties.TYPE.toLowerCase() ===  "plot";
 }
 
+// Change grouping
+function grouper(nft) {
+    return nft.properties.NAME;
+}
+
 async function axiosRequest({contract, table, query, offset}) {
     // Headers
     let config = {headers: {"Content-Type": "application/json", "Cache-Control": "no-cache"}};
@@ -62,9 +67,14 @@ async function queryContract({contract,table,query={}},offset=0) {
     for (let i = 0; i < nfts.length; i++) {
         if(limiter(nfts[i])) {
             if (owners.hasOwnProperty(nfts[i].account)) {
-                owners[nfts[i].account] += 1;
+                if (owners[nfts[i].account].hasOwnProperty(grouper(nfts[i]))) {
+                    owners[nfts[i].account][grouper(nfts[i])] += 1;
+                } else {
+                    owners[nfts[i].account][grouper(nfts[i])] = 1;
+                }
             } else {
-                owners[nfts[i].account] = 1;
+                owners[nfts[i].account] = {};
+                owners[nfts[i].account][grouper(nfts[i])] = 1;
             }
         }
     }
