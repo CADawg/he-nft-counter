@@ -67,13 +67,14 @@ async function queryContract({contract,table,query={}},offset=0) {
     for (let i = 0; i < nfts.length; i++) {
         if(limiter(nfts[i])) {
             if (owners.hasOwnProperty(nfts[i].account)) {
+                owners[nfts[i].account].total += 1;
                 if (owners[nfts[i].account].hasOwnProperty(grouper(nfts[i]))) {
                     owners[nfts[i].account][grouper(nfts[i])] += 1;
                 } else {
                     owners[nfts[i].account][grouper(nfts[i])] = 1;
                 }
             } else {
-                owners[nfts[i].account] = {};
+                owners[nfts[i].account] = {"total": 1};
                 owners[nfts[i].account][grouper(nfts[i])] = 1;
             }
         }
